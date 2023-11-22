@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <link rel="stylesheet" href="/index.0d5f8989.css">
+    <link rel="stylesheet" href="/index.f004ef08.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <script src="/index.34ce65bc.js" defer=""></script>
+    <script src="/courses.eda16b4d.js" defer=""></script>
+</head>
+<body>
+    <header>
+        <h1>Courses</h1>
+    </header>
+    <main>
+        <div class="d-flex flex-column gap-2">
+            <div class="align-self-end">
+                <button id="btn-new" type="button" class="btn btn-primary">+ NEW COURSE</button>
+            </div>
+            <div class="form-floating mb-3">
+                <input readonly="" name="id" type="text" class="form-control" id="id">  
+                <label for="course-id">Course ID</label>  
+                </div>
+            <div class="form-floating mb-3">
+                <input name="name" type="text" class="form-control" id="name" placeholder="Eg. Object Oriented Programming">
+                <label for="course-name">Course Name</label>
+            </div>
+            <div class="form-floating">
+                <select class="form-select" id="duration" aria-label="Floating label select example">
+                <option value="3 months">3 months</option>
+                <option value="6 months">6 months</option>
+                <option value="12 months">12 months</option>
+                </select>
+                <label for="duration"> Course Duration</label>
+            </div>
+            <div>
+                <button type="button" id="btn-save" class="btn btn-primary">SAVE</button>
+            </div>
+        </div>
+        <table id="course-table" class="table border mt-3">
+            <thead>
+              <tr>
+                <th scope="col">Course ID</th>
+                <th scope="col">Course Name</th>
+                <th scope="col">Duration</th>
+                <th scope="col">chang</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr>
+                <td>M001</td>
+                <td>Programming Fundamentals</td>
+                <td>6 months</td>
+                <td>
+                    <i data-bs-toggle="tooltip"
+                        data-bs-placement="left"
+                        data-bs-title="Click to edit" 
+                        class="edit bi bi-pencil-fill">
+                    </i>
+                    <i data-bs-toggle="tooltip"
+                        data-bs-placement="left"
+                        data-bs-title="Click to delete" 
+                    class="delete bi bi-trash-fill">
+                    </i>
+                </td>
+              </tr> -->
+            </tbody>
+          </table>
+    </main>
+</body>
+</html>
