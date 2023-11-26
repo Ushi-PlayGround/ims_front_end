@@ -142,13 +142,13 @@
       this[globalName] = mainExports;
     }
   }
-})({"1INQP":[function(require,module,exports) {
+})({"amRpJ":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "dd808801eda16b4d";
+module.bundle.HMR_BUNDLE_ID = "d0a9ad0e521d3eee";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -574,124 +574,54 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"dKvZw":[function(require,module,exports) {
-const btnNewElm = document.querySelector("#btn-new");
-const btnAddElm = document.querySelector("#btn-save");
-const nameElm = document.querySelector("#course-name");
-const durationElm = document.querySelector("#course-duration");
-const tblElm = document.querySelector("#course-table");
-const API_BASE_URL = "http://localhost:8080";
-// const { API_BASE_URL }= 'http://localhost:8080';
-getAllCourses();
-function getAllCourses() {
-    fetch(`${API_BASE_URL}/courses`).then((res)=>{
-        if (res.ok) res.json().then((courseList)=>courseList.forEach((course)=>createCourse(course)));
-        else alert("Failed to load the courses!");
-    }).catch((err)=>alert("Something went wrong"));
-}
-function createCourse(course) {
-    const tbodyElm = document.querySelector("#course-table tbody");
-    const trElm = document.createElement("tr");
-    tbodyElm.append(trElm);
-    trElm.id = course.id;
-    trElm.name = course.name;
-    trElm.duration = course.duration;
-    trElm.innerHTML = `
-                <td class="text-center">${course.id}</td>
-                <td>${course.name}</td>
-                <td class="text-center">${course.duration}</td>
-                <td class="text-end">
-                    <i data-bs-toggle="tooltip"
-                        data-bs-placement="left"
-                        data-bs-title="Click to edit" 
-                        class="edit bi bi-pencil-fill">
-                    </i>
-                    <i data-bs-toggle="tooltip"
-                        data-bs-placement="left"
-                        data-bs-title="Click to delete" 
-                    class="delete bi bi-trash-fill">
-                    </i>
-                </td>`;
-}
+},{}],"5DaYm":[function(require,module,exports) {
+const txtNameElm = document.querySelector("#txt-name");
+const txtContactElm = document.querySelector("#txt-contact");
+const btnAddElm = document.querySelector("#btn-add");
+// const {API_BASE_URL}=process.env
 btnAddElm.addEventListener("click", ()=>{
-    if (btnAddElm.innerText == "SAVE") {
-        const courseName = nameElm.value.trim();
-        const courseDuration = durationElm.value.trim();
-        if (!courseName) {
-            nameElm.focus();
-            nameElm.select();
-            return;
-        } else if (!courseDuration) {
-            durationElm.focus();
-            durationElm.select();
-            return;
-        }
-        fetch(`${API_BASE_URL}/courses`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: courseName,
-                duration: courseDuration
-            })
-        }).then((res)=>{
-            if (res.ok) res.json().then((course)=>{
-                createCourse(course);
-                nameElm.value = "";
-                durationElm.value = "";
-                nameElm.focus();
-            });
-            else alert("Failed to add the task");
-        }).catch((err)=>alert("Something went wrong"));
+    const name = txtNameElm.value.trim();
+    const contact = txtContactElm.value.trim();
+    if (!/^[A-Za-z ]+$/.test(name)) {
+        txtNameElm.focus();
+        txtNameElm.select();
+        return;
+    } else if (!/^\d{3}-\d{7}$/.test(contact)) {
+        txtContactElm.focus();
+        txtContactElm.select();
+        return;
     }
-});
-tblElm.addEventListener("click", (e)=>{
-    if (e.target?.classList.contains("delete")) {
-        const targetId = e.target.closest("tr").id;
-        fetch(`${API_BASE_URL}/courses/${targetId}`, {
-            method: "DELETE"
-        }).then((res)=>{
-            if (res.ok) e.target.closest("tr").remove();
-            else alert("Failed to delete the task");
-        }).catch((err)=>{
-            alert("Something went wrong, try again later");
+    // save the teacher
+    fetch(`${API_BASE_URL}/teachers`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name,
+            contact
+        })
+    }).then((res)=>{
+        if (res.status === 201) res.json().then((teacher)=>{
+            txtNameElm.value = "";
+            txtContactElm = "";
+            txtNameElm.focus();
         });
-    }
-    if (e.target?.classList.contains("edit")) {
-        btnAddElm.innerText = "UPDATE";
-        nameElm.value = e.target.closest("tr").children[1].innerText;
-        durationElm.value = e.target.closest("tr").children[2].innerText;
-        const idElm = e.target.closest("tr").children[0].innerText;
-        const targetId = e.target.closest("tr").id;
-        btnAddElm.addEventListener("click", ()=>{
-            btnAddElm.innerText = "UPDATE";
-            console.log;
-            const courseName = nameElm.value.trim();
-            const courseDuration = durationElm.value.trim();
-            const newCourse = {
-                // id:idElm,
-                name: courseName,
-                duration: courseDuration
-            };
-            fetch(`${API_BASE_URL}/courses/${targetId}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(newCourse)
-            }).then((res)=>{
-                if (res.ok) res.json().then((course)=>{
-                    nameElm.value = "";
-                    durationElm.value = "";
-                    nameElm.focus();
-                });
-                else alert("Failed to add the task");
-            }).catch((err)=>alert("Something went wrong"));
-        });
-    }
+        else alert("Failed to create teacher record");
+    }).catch((err)=>alert("Something went wrong,try again later."));
 });
+function createNewRow(teacher) {
+    const trElm = documnet.createElement("tr");
+    document.querySelector("#tbl tbody").append(trElm);
+    trElm.innerHTML = `
+        <td>${teacher.id}</td>
+        <td>${teacher.name}</td>
+        <td>${teacher.contact}</td>
+        <td><button class="delete btn btn-danger>Delete</button></td>
 
-},{}]},["1INQP","dKvZw"], "dKvZw", "parcelRequire8d29")
+    `;
+}
 
-//# sourceMappingURL=courses.eda16b4d.js.map
+},{}]},["amRpJ","5DaYm"], "5DaYm", "parcelRequire8d29")
+
+//# sourceMappingURL=temp.521d3eee.js.map

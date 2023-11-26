@@ -1,0 +1,25 @@
+body {
+  background-color: #efe8f6;
+}
+
+header h1 {
+  color: #8a2be2;
+}
+
+header i {
+  color: purple;
+}
+
+.edit {
+  visibility: hidden;
+}
+
+.edit:hover, .delete:hover {
+  color: red;
+}
+
+tbody tr:hover .edit {
+  visibility: visible;
+}
+
+/*# sourceMappingURL=courses.3626e52d.css.map */
